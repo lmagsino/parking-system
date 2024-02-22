@@ -11,4 +11,6 @@ class ParkingLot
   field :medium_parking_rate
   field :large_parking_rate
   field :flat_rate_duration
+
+  has_many :parking_slots
 end
