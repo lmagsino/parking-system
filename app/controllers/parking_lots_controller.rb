@@ -35,7 +35,7 @@ class ParkingLotsController < ApplicationController
   def destroy
     @parking_lot.destroy!
 
-    render :status => :ok
+    head :ok
   end
 
   def entry_points
