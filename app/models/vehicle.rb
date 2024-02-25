@@ -18,7 +18,7 @@ class Vehicle
 
 
   scope :plate_number_is, -> (plate_number) do
-    where(plate_number: /.*#{plate_number.downcase}.*/)
+    where(plate_number: /#{Regexp.escape(plate_number.downcase)}/i)
   end
 
 

@@ -19,6 +19,24 @@ class VehiclesController < ApplicationController
     render :json => result, :status => status
   end
 
+  def unpark
+    parking_transaction =
+      VehicleManager::UnparkInitializer.call(
+        params[:plate_number], params[:transaction_time]
+      )
+
+    if parking_transaction.present?
+      status = :ok
+      result = {:amount => parking_transaction.amount}
+    else
+      status = :bad_request
+      result =
+        {:message => 'Error retrieving the total amount. Please try again.'}
+    end
+
+    render :json => result, :status => status
+  end
+
 
 
   private

@@ -2,12 +2,15 @@ class ParkingTransaction
   include Mongoid::Document
   include Mongoid::Timestamps
 
+  include ::Callbacks::ParkingTransaction
+
   belongs_to :parking_slot
   belongs_to :vehicle
 
   field :start_time
   field :end_time
   field :returning
+  field :amount
 
 
 
