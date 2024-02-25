@@ -7,28 +7,28 @@ class ParkingLotsController < ApplicationController
   def index
     @parking_lots = ParkingLot.all
 
-    render json: @parking_lots
+    render_json @parking_lots, :ok
   end
 
   def show
-    render json: @parking_lot
+    render_json @parking_lot, :ok
   end
 
   def create
     @parking_lot = ParkingLot.new parking_lot_params
 
     if @parking_lot.save
-      render :json => @parking_lot, :status => :created
+      render_json @parking_lot, :created
     else
-      render :json => @parking_lot.errors, :status => :unprocessable_entity
+      render_errors @parking_lot.errors, :unprocessable_entity
     end
   end
 
   def update
     if @parking_lot.update parking_lot_params
-      render :json => @parking_lot, :status => :ok
+      render_json @parking_lot, :ok
     else
-      render :json => @parking_lot.errors, :status => :unprocessable_entity
+      render_errors @parking_lot.errors, :unprocessable_entity
     end
   end
 
@@ -42,7 +42,7 @@ class ParkingLotsController < ApplicationController
     @parking_lot = ParkingLot.first
     @entry_points = EntryPointsGenerator.call @parking_lot.entry_point
 
-    render json: @entry_points
+    render_json @entry_points, :ok
   end
 
 
@@ -60,4 +60,5 @@ class ParkingLotsController < ApplicationController
         :flat_rate_duration
       )
     end
+
 end
