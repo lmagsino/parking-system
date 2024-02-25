@@ -1,4 +1,5 @@
 class ParkingSlotsController < ApplicationController
+
   before_action :set_parking_slot, only: %i[ show ]
 
 
@@ -6,11 +7,11 @@ class ParkingSlotsController < ApplicationController
   def index
     @parking_slots = ParkingSlot.all
 
-    render json: @parking_slots
+    render_json @parking_slots, :ok
   end
 
   def show
-    render json: @parking_slot
+    render_json @parking_slot, :ok
   end
 
   def create
@@ -21,27 +22,28 @@ class ParkingSlotsController < ApplicationController
       )
 
     if @parking_slots.present?
-      render :json => @parking_slots, :status => :created
+      render_json @parking_slots, :created
     else
-      render :json => @parking_slots.errors, :status => :unprocessable_entity
+      render_json 'Failed to create parking slot', :unprocessable_entity
     end
   end
 
   def destroy
     @parking_slot.destroy!
 
-    render :status => :ok
+    head :ok
   end
 
 
 
   private
 
-    def set_parking_slot
-      @parking_slot = ParkingSlot.find params[:id]
-    end
+  def set_parking_slot
+    @parking_slot = ParkingSlot.find params[:id]
+  end
 
-    def parking_slot_params
-      params.require(:parking_slot).permit :parking_lot_id, :parking_type
-    end
+  def parking_slot_params
+    params.require(:parking_slot).permit :parking_lot_id, :parking_type
+  end
+
 end

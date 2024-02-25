@@ -2,7 +2,6 @@ class ParkingSlot
   include Mongoid::Document
   include Mongoid::Timestamps
 
-
   belongs_to :parking_lot
 
   field :parking_type
@@ -10,11 +9,9 @@ class ParkingSlot
 
   TYPES = ['small', 'medium', 'large']
 
-  TYPES.each do |type|
-    define_method "#{type}?" do
-      parking_type == type
-    end
-  end
+  validates :parking_lot, presence: true
+  validates :parking_type, inclusion: { in: TYPES }
+  validates :location, presence: true
 
 
 
@@ -30,20 +27,17 @@ class ParkingSlot
 
 
 
-  scope :under, -> (parking_lot)do
-    where :parking_lot => parking_lot
+  TYPES.each do |type|
+    define_method "#{type}?" do
+      parking_type == type
+    end
   end
 
-  scope :parking_type_in, -> (parking_types)do
-    where :parking_type.in => parking_types
-  end
 
-  scope :available, -> do
-    where :status => :available
-  end
 
-  scope :ordered_by_created_at, -> do
-    order :created_at => :desc
-  end
+  scope :under, -> (parking_lot) { where :parking_lot => parking_lot }
+  scope :parking_type_in, -> (parking_types) { where(:parking_type.in => parking_types) }
+  scope :available, -> { where :status => :available }
+  scope :ordered_by_created_at, -> { order :created_at => :desc }
 
 end
