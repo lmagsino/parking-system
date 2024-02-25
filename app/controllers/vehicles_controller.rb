@@ -26,7 +26,7 @@ class VehiclesController < ApplicationController
     def vehicle_params
       {
         :plate_number => params[:plate_number],
-        :type => params[:vehicle_type]
+        :vehicle_type => params[:vehicle_type]
       }
     end
 

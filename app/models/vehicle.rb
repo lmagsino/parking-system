@@ -4,50 +4,31 @@ class Vehicle
 
   has_many :parking_transactions
 
-  field :type
+  field :vehicle_type
   field :plate_number
 
-  TYPES = {
-    :small => 0,
-    :medium => 1,
-    :large => 2
-  }.freeze
+  TYPES = ['small', 'medium', 'large']
 
-
-  def type= value
-    super value
-  end
-
-  def type
-    TYPES.key super
-  end
-
-  def small?
-    type == :small
-  end
-
-  def medium?
-    type == :medium
-  end
-
-  def large?
-    type == :large
+  TYPES.each do |type|
+    define_method "#{type}?" do
+      vehicle_type == type
+    end
   end
 
 
 
   scope :plate_number_is, -> (plate_number) do
-    where 'lower(plate_number) = ?', plate_number.downcase
+    where(plate_number: /.*#{plate_number.downcase}.*/)
   end
 
 
 
   def latest_parking_transaction
-    self.parking_transactions.order(:start_time).last
+    self.parking_transactions.order_by(:start_time => :desc).first
   end
 
   def latest_completed_parking_transaction
-    self.parking_transactions.order(:start_time).completed.last
+    self.parking_transactions.completed.order_by(:start_time => :desc).first
   end
 
 end

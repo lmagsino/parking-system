@@ -23,7 +23,7 @@ module ParkingSlotManager
       parking_slots =
         ParkingSlot.
           under(@parking_lot)
-          .with_parking_type(@parking_types)
+          .parking_type_in(@parking_types)
           .available
 
       return parking_slots if parking_slots.empty?
@@ -53,7 +53,7 @@ module ParkingSlotManager
     def get_sorted_parking_slots parking_slots
       parking_slots.sort_by do |parking_slot|
         [
-          ParkingSlot.parking_types[parking_slot.parking_type],
+          parking_slot.parking_type,
           parking_slot[:location][@entry_point - 1]
         ]
       end

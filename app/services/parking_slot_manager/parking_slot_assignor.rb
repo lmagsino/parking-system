@@ -40,4 +40,3 @@ module ParkingSlotManager
 
   end
 end
-

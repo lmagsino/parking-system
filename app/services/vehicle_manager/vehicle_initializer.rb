@@ -9,7 +9,7 @@ module VehicleManager
       vehicle = get_existing
 
       if vehicle.present?
-        vehicle.type = vehicle[:type]
+        vehicle.vehicle_type = vehicle[:vehicle_type]
         vehicle.save
         return vehicle
       end

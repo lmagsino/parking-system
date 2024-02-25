@@ -5,6 +5,10 @@ class ParkingTransaction
   belongs_to :parking_slot
   belongs_to :vehicle
 
+  field :start_time
+  field :end_time
+  field :returning
+
 
 
   state_machine :status, :initial => :pending do
