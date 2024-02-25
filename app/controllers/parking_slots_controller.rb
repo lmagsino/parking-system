@@ -1,33 +1,29 @@
 class ParkingSlotsController < ApplicationController
-  before_action :set_parking_slot, only: %i[ show update destroy ]
+  before_action :set_parking_slot, only: %i[ show ]
 
 
 
   def index
     @parking_slots = ParkingSlot.all
 
-    render json: @parking_lots
+    render json: @parking_slots
   end
 
   def show
-    render json: @parking_lot
+    render json: @parking_slot
   end
 
   def create
-    @parking_slot = ParkingSlot.new parking_slot_params
+    @parking_slots =
+      ParkingSlotManager::ParkingSlotsCreator.call(
+        parking_slot_params,
+        params[:locations]
+      )
 
-    if @parking_slot.save
-      render :json => @parking_slot, :status => :created
+    if @parking_slots.present?
+      render :json => @parking_slots, :status => :created
     else
-      render :json => @parking_slot.errors, :status => :unprocessable_entity
-    end
-  end
-
-  def update
-    if @parking_slot.update parking_slot_params
-      render :json => @parking_slot, :status => :ok
-    else
-      render :json => @parking_slot.errors, :status => :unprocessable_entity
+      render :json => @parking_slots.errors, :status => :unprocessable_entity
     end
   end
 
