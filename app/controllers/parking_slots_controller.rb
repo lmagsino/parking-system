@@ -24,7 +24,7 @@ class ParkingSlotsController < ApplicationController
     if @parking_slots.present?
       render_json @parking_slots, :created
     else
-      render_json 'Failed to create parking slot', :unprocessable_entity
+      render_json 'Failed to create parking slot', :bad_request
     end
   end
 

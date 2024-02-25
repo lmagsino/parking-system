@@ -12,15 +12,20 @@ class ParkingTransaction
   field :returning
   field :amount
 
+  STATUS_INITIAL = :initial
+  STATUS_PENDING = :pending
+  STATUS_STARTED = :started
+  STATUS_COMPLETED = :completed
 
 
-  state_machine :status, :initial => :pending do
+
+  state_machine :status, STATUS_INITIAL => STATUS_PENDING do
     event :start do
-      transition :pending => :started
+      transition STATUS_PENDING => STATUS_STARTED
     end
 
     event :complete do
-      transition :started => :completed
+      transition STATUS_STARTED => STATUS_COMPLETED
     end
 
     before_transition :on => :complete, :do => :compute_amount
@@ -31,7 +36,7 @@ class ParkingTransaction
 
 
   scope :completed, -> do
-    where :status => :completed
+    where :status => STATUS_COMPLETED
   end
 
   scope :ordered_by_created_at, -> do
