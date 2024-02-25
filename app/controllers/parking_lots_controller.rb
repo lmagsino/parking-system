@@ -38,6 +38,13 @@ class ParkingLotsController < ApplicationController
     render :status => :ok
   end
 
+  def entry_points
+    @parking_lot = ParkingLot.first
+    @entry_points = EntryPointsGenerator.call @parking_lot.entry_point
+
+    render json: @entry_points
+  end
+
 
 
   private
