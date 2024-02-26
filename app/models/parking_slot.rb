@@ -37,6 +37,7 @@ class ParkingSlot
 
   scope :under, -> (parking_lot) { where :parking_lot => parking_lot }
   scope :parking_type_in, -> (parking_types) { where(:parking_type.in => parking_types) }
+  scope :parking_type_is, -> (parking_type) { where(:parking_type => parking_type)}
   scope :available, -> { where :status => :available }
   scope :ordered_by_created_at, -> { order :created_at => :desc }
 

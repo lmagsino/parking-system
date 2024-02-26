@@ -12,30 +12,26 @@ class ParkingTransaction
   field :returning, type: Boolean
   field :amount, type: BigDecimal
 
-  STATUS_PENDING = :pending
-  STATUS_STARTED = :started
-  STATUS_COMPLETED = :completed
 
 
-
-  state_machine :status, :initial => STATUS_PENDING do
+  state_machine :status, :initial => :pending do
     event :start do
-      transition STATUS_PENDING => STATUS_STARTED
+      transition :pending => :started
     end
 
     event :complete do
-      transition STATUS_STARTED => STATUS_COMPLETED
+      transition :started => :completed
     end
 
     before_transition :on => :complete, :do => :compute_amount
-    after_transition :on => :start, :do => :occupy_parking_slot
-    after_transition :on => :complete, :do => :release_parking_slot
+    before_transition :on => :start, :do => :occupy_parking_slot
+    before_transition :on => :complete, :do => :release_parking_slot
   end
 
 
 
   scope :completed, -> do
-    where :status => STATUS_COMPLETED
+    where :status => :completed
   end
 
   scope :ordered_by_created_at, -> do
