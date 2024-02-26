@@ -23,9 +23,8 @@ Welcome to the Parking Application created by Leo Magsino. This application prov
    * Update mongoid.yml with the provided database URL under the development environment.
    * development/clients/default/uri: `mongodb+srv://admin:admin@cluster0.3cwdqqf.mongodb.net/parking_system_development?retryWrites=true&w=majority`
 
-* Database is managed by Mongodb Atlas. Url is provided below and this already allowed all requests to have access
-* Install Dependencies: Run bundle install to install required gems.
-* Start Application: Execute rails s to start the application.
+* Install Dependencies: Run `bundle install` to install required gems.
+* Start Application: Execute `rails s` to start the application.
 
 ## TESTING
 * Tool: Use Postman to test the application endpoints.
@@ -49,6 +48,9 @@ Welcome to the Parking Application created by Leo Magsino. This application prov
 ### UNPARK
 * `Unpark`: Unparks a vehicle and computes the total amount.
 * Total amount: Result includes the total amount.
+
+### PARKING TRANSACTION
+* `Retrieve parking transactions`: Retrieve all parking transaction ordered by `created_at`
 
 Feel free to explore and utilize the features provided by the Parking Application. If you encounter any issues or have suggestions for improvement, please don't hesitate to reach out to the developer, Leo Magsino.
 
