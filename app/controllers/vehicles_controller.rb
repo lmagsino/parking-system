@@ -9,14 +9,11 @@ class VehiclesController < ApplicationController
       )
 
     if parking_transaction.present?
-      status = :created
-      result = {:location => parking_transaction.parking_slot.location}
+      render_json({:location => parking_transaction.parking_slot.location}, :ok)
     else
-      status = :bad_request
-      result = {:message => 'Sorry, No available parking slot for you'}
+      render_json({:message => 'Sorry, No available parking slot for you'}, :bad_request)
     end
 
-    render :json => result, :status => status
   end
 
   def unpark
@@ -26,33 +23,25 @@ class VehiclesController < ApplicationController
       )
 
     if parking_transaction.present?
-      status = :ok
-      result = {:amount => parking_transaction.amount}
+      render_json({:amount => parking_transaction.amount}, :ok)
     else
-      status = :bad_request
-      result =
-        {:message => 'Error retrieving the total amount. Please try again.'}
+      render_json({:message => 'Error retrieving the total amount. Please try again.'}, :bad_request)
     end
-
-    render :json => result, :status => status
   end
 
 
 
   private
 
-    def vehicle_params
-      {
-        :plate_number => params[:plate_number],
-        :vehicle_type => params[:vehicle_type]
-      }
-    end
+  def vehicle_params
+    params.permit :plate_number, :vehicle_type
+  end
 
-    def parking_slot_params
-      {
-        :parking_lot => ParkingLot.first,
-        :entry_point => AlphanumericUtility.letter_to_number(params[:entry_point])
-      }
-    end
+  def parking_slot_params
+    {
+      :parking_lot => ParkingLot.first,
+      :entry_point => AlphanumericUtility.letter_to_number(params[:entry_point])
+    }
+  end
 
 end

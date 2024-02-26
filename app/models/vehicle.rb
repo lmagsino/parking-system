@@ -4,10 +4,10 @@ class Vehicle
 
   has_many :parking_transactions
 
-  field :vehicle_type
-  field :plate_number
+  field :vehicle_type, type: String
+  field :plate_number, type: String
 
-  TYPES = ['small', 'medium', 'large']
+  TYPES = ['small', 'medium', 'large'].freeze
 
   TYPES.each do |type|
     define_method "#{type}?" do

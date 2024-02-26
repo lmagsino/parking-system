@@ -20,7 +20,7 @@ class ParkingLotsController < ApplicationController
     if @parking_lot.save
       render_json @parking_lot, :created
     else
-      render_errors @parking_lot.errors, :unprocessable_entity
+      render_errors @parking_lot.errors, :bad_request
     end
   end
 
@@ -28,7 +28,7 @@ class ParkingLotsController < ApplicationController
     if @parking_lot.update parking_lot_params
       render_json @parking_lot, :ok
     else
-      render_errors @parking_lot.errors, :unprocessable_entity
+      render_errors @parking_lot.errors, :bad_request
     end
   end
 

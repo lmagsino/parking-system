@@ -1,6 +1,8 @@
 module VehicleManager
   class VehicleReturningChecker < ApplicationService
 
+    attr_reader :vehicle, :transaction_time
+
     SECONDS_IN_HOUR = 3600
 
 
@@ -17,8 +19,11 @@ module VehicleManager
       transaction_time = Time.parse @transaction_time.to_s
       end_time = Time.parse end_time.to_s
 
-      total_time_difference = (transaction_time - end_time)
+      total_time_difference = transaction_time - end_time
       total_time_difference <= SECONDS_IN_HOUR
+    rescue ArgumentError => e
+      handle_error "Error in VehicleReturningChecker: #{e.message}"
+      false
     end
 
   end

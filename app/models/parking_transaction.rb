@@ -7,20 +7,24 @@ class ParkingTransaction
   belongs_to :parking_slot
   belongs_to :vehicle
 
-  field :start_time
-  field :end_time
-  field :returning
-  field :amount
+  field :start_time, type:DateTime
+  field :end_time, type:DateTime
+  field :returning, type: Boolean
+  field :amount, type: BigDecimal
+
+  STATUS_PENDING = :pending
+  STATUS_STARTED = :started
+  STATUS_COMPLETED = :completed
 
 
 
-  state_machine :status, :initial => :pending do
+  state_machine :status, :initial => STATUS_PENDING do
     event :start do
-      transition :pending => :started
+      transition STATUS_PENDING => STATUS_STARTED
     end
 
     event :complete do
-      transition :started => :completed
+      transition STATUS_STARTED => STATUS_COMPLETED
     end
 
     before_transition :on => :complete, :do => :compute_amount
@@ -31,7 +35,7 @@ class ParkingTransaction
 
 
   scope :completed, -> do
-    where :status => :completed
+    where :status => STATUS_COMPLETED
   end
 
   scope :ordered_by_created_at, -> do
