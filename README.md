@@ -3,7 +3,7 @@
 Welcome to the Parking Application created by Leo Magsino. This application provides a seamless solution for managing parking lots, slots, and vehicle parking/unparking using Ruby on Rails with MongoDB integration.
 
 ## TECHNOLOGIES
-* Ruby on Rails: Framework for web application development.
+* **Ruby on Rails:** Framework for web application development.
 * MongoDB: A NoSQL database used for storing parking lot data.
 
 ## PROJECT DIRECTORY
