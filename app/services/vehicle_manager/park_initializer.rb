@@ -13,6 +13,8 @@ module VehicleManager
 
     def call
       begin
+        return unless get_vehicle.parking_transactions.ongoing.empty?
+
         ParkingSlotManager::ParkingSlotAssignor.call(
           get_vehicle,
           get_parking_slot,

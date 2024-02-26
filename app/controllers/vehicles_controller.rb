@@ -11,7 +11,7 @@ class VehiclesController < ApplicationController
     if parking_transaction.present?
       render_json({:location => parking_transaction.parking_slot.location}, :ok)
     else
-      render_json({:message => 'Sorry, No available parking slot for you'}, :bad_request)
+      render_json({:message => 'Sorry, No available parking slot for now'}, :bad_request)
     end
 
   end

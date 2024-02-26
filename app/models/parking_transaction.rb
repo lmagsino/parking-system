@@ -38,4 +38,8 @@ class ParkingTransaction
     order :created_at => :desc
   end
 
+  scope :ongoing, -> do
+    where :status => :started
+  end
+
 end
