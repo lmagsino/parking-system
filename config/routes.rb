@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  resources :parking_slots, :only => [:new, :create, :index]
+  resources :parking_slots, :only => [:new, :create, :index, :destroy]
   resources :parking_transactions, :only => [:index]
 
   resources :parking_lots, :except => [:new, :edit] do

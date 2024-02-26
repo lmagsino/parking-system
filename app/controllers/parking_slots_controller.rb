@@ -1,6 +1,6 @@
 class ParkingSlotsController < ApplicationController
 
-  before_action :set_parking_slot, only: %i[ show ]
+  before_action :set_parking_slot, only: %i[ show destroy ]
 
 
 
