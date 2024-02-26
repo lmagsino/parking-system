@@ -29,6 +29,7 @@ Welcome to the Parking Application created by Leo Magsino. This application prov
 
 ## TESTING
 * Tool: Use Postman to test the application endpoints.
+* Import the collection of requests into Postman. The file 'parking.json' is included in this repository.
 * Below are the descriptions of each request for testing:
 
 ### Parking Lot
