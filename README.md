@@ -23,9 +23,8 @@ Welcome to the Parking Application created by Leo Magsino. This application prov
    * Update mongoid.yml with the provided database URL under the development environment.
    * development/clients/default/uri: `mongodb+srv://admin:admin@cluster0.3cwdqqf.mongodb.net/parking_system_development?retryWrites=true&w=majority`
 
-* Database is managed by Mongodb Atlas. Url is provided below and this already allowed all requests to have access
-* Install Dependencies: Run bundle install to install required gems.
-* Start Application: Execute rails s to start the application.
+* Install Dependencies: Run `bundle install` to install required gems.
+* Start Application: Execute `rails s` to start the application.
 
 ## TESTING
 * Tool: Use Postman to test the application endpoints.
