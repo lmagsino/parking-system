@@ -1,13 +1,16 @@
 module Calculator
   class ContinuousRate < ApplicationService
 
+    attr_reader :parking_type, :parking_lot
+
+
+
     def initialize parking_type, parking_lot
       @parking_type = parking_type
       @parking_lot = parking_lot
     end
 
     def call
-
       case @parking_type
       when 'small'
         @parking_lot.small_parking_rate
@@ -16,7 +19,6 @@ module Calculator
       when 'large'
         @parking_lot.large_parking_rate
       end
-
     end
 
   end

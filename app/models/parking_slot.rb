@@ -4,8 +4,8 @@ class ParkingSlot
 
   belongs_to :parking_lot
 
-  field :parking_type
-  field :location
+  field :parking_type, type: String
+  field :location, type: Array
 
   TYPES = ['small', 'medium', 'large']
 
