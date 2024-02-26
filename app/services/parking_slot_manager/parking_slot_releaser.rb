@@ -26,6 +26,11 @@ module ParkingSlotManager
 
     def update_parking_transaction parking_transaction
       parking_transaction.end_time = @transaction_time.to_datetime
+
+      if parking_transaction.start_time >= parking_transaction.end_time
+        raise StandardError, 'End time for parking reservation precedes start time.'
+      end
+
       parking_transaction.complete
       parking_transaction
     end
