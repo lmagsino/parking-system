@@ -24,7 +24,13 @@ module ParkingSlotManager
     private
 
     def get_available_parking_slots
-      parking_slots = ParkingSlot.under(parking_lot).parking_type_in(parking_types).available
+      parking_slots = []
+
+      parking_types.each do |parking_type|
+        parking_slots = ParkingSlot.under(parking_lot).parking_type_is(parking_type).available
+        break unless parking_slots.empty?
+      end
+
       filtered_parking_slots = []
 
       entry_point.downto(1) do |point|
