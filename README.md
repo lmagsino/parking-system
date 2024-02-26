@@ -49,6 +49,9 @@ Welcome to the Parking Application created by Leo Magsino. This application prov
 * `Unpark`: Unparks a vehicle and computes the total amount.
 * Total amount: Result includes the total amount.
 
+### PARKING TRANSACTION
+* `Retrieve parking transactions`: Retrieve all parking transaction ordered by `created_at`
+
 Feel free to explore and utilize the features provided by the Parking Application. If you encounter any issues or have suggestions for improvement, please don't hesitate to reach out to the developer, Leo Magsino.
 
 
