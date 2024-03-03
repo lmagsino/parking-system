@@ -12,8 +12,8 @@ module ParkingSlotManager
     end
 
     def call
-
       validate_vehicle_type
+
       case vehicle_type
       when 'small'
         valid_types('small', 'medium', 'large')
@@ -22,7 +22,6 @@ module ParkingSlotManager
       when 'large'
         valid_types('large')
       end
-
     end
 
 
@@ -34,9 +33,9 @@ module ParkingSlotManager
     end
 
     def validate_vehicle_type
-      return if VALID_VEHICLE_TYPES.include? vehicle_type
-
-      raise ArgumentError, "Invalid vehicle type: #{vehicle_type}"
+      unless VALID_VEHICLE_TYPES.include? vehicle_type
+        raise StandardError, "Invalid vehicle type: #{vehicle_type}"
+      end
     end
 
   end

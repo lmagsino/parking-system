@@ -5,44 +5,50 @@ module VehicleManager
 
 
 
-    def initialize vehicle, parking_slot, transaction_time
-      @vehicle = vehicle
-      @parking_slot = parking_slot
+    def initialize vehicle_params, parking_slot_params, transaction_time
+      @vehicle = get_vehicle_instance vehicle_params
+      @parking_slot_params = parking_slot_params
       @transaction_time = transaction_time
     end
 
     def call
-      begin
-        return unless get_vehicle.parking_transactions.ongoing.empty?
-
-        ParkingSlotManager::ParkingSlotAssignor.call(
-          get_vehicle,
-          get_parking_slot,
-          @transaction_time
-        )
-      rescue StandardError => e
-        handle_error "Error in ParkInitializer: #{e.message}"
-      end
+      validate_transaction
+      assign_parking_slot
     end
 
 
 
     private
 
-    def get_vehicle
-      VehicleInitializer.call @vehicle
+    def validate_transaction
+      if @vehicle.parking_transactions.ongoing.present?
+        raise StandardError, 'You are already parked.'
+      end
     end
 
-    def get_parking_slot
-      parking_types =
-        ParkingSlotManager::ParkingSlotTypeChecker.call(
-          @vehicle[:vehicle_type]
-        )
+    def assign_parking_slot
+      parking_slot = find_parking_slot get_parking_types
 
+      ParkingSlotManager::ParkingSlotAssignor.call(
+        @vehicle,
+        parking_slot,
+        @transaction_time
+      )
+    end
+
+    def get_vehicle_instance vehicle
+      VehicleInitializer.call vehicle
+    end
+
+    def get_parking_types
+      ParkingSlotManager::ParkingSlotTypeChecker.call @vehicle.vehicle_type
+    end
+
+    def find_parking_slot parking_types
       ParkingSlotManager::ParkingSlotChecker.call(
-        @parking_slot[:parking_lot],
+        @parking_slot_params[:parking_lot],
         parking_types,
-        @parking_slot[:entry_point]
+        @parking_slot_params[:entry_point]
       )
     end
 
