@@ -23,7 +23,7 @@ class ParkingSlotsController < ApplicationController
         params[:locations]
       )
 
-    if @parking_slots.present?
+    if @parking_slots
       render_json @parking_slots, :created
     else
       render_json 'Failed to create parking slot', :bad_request

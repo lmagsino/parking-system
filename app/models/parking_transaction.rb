@@ -28,8 +28,9 @@ class ParkingTransaction
       transition :completed => :started
     end
 
-    before_transition :on => :complete, :do => :compute_amount
+
     before_transition :on => :start, :do => :occupy_parking_slot
+    before_transition :on => :complete, :do => :compute_amount
     before_transition :on => :complete, :do => :release_parking_slot
     before_transition :on => :return, :do => :reoccupy_parking_slot
   end
@@ -42,6 +43,10 @@ class ParkingTransaction
 
   scope :ordered_by_created_at, -> do
     order :created_at => :desc
+  end
+
+  scope :ordered_by_end_time, -> do
+    order :end_time => :asc
   end
 
   scope :ongoing, -> do
