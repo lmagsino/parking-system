@@ -28,7 +28,7 @@ module ParkingSlotManager
     def prepare_parking_slot_params location
       {
         parking_lot: @parking_lot,
-        parking_type: @parking_slot_params.parking_type,
+        parking_type: @parking_slot_params[:parking_type],
         location: location
       }
     end

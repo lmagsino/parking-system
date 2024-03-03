@@ -15,7 +15,6 @@ module VehicleManager
     end
 
     def call
-
       end_time = @vehicle.latest_completed_parking_transaction.try :end_time
       return false if end_time.nil?
 
@@ -24,9 +23,7 @@ module VehicleManager
 
       total_time_difference = transaction_time - end_time
       total_time_difference <= SECONDS_IN_HOUR
-
     end
-
 
   end
 end
