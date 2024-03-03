@@ -1,29 +1,32 @@
 module VehicleManager
   class VehicleInitializer < ApplicationService
 
-    def initialize vehicle
-      @vehicle = vehicle
+    def initialize vehicle_params
+      @vehicle_params = vehicle_params
     end
 
     def call
-      vehicle = get_existing
+      existing_vehicle = get_existing_vehicle
 
-      if vehicle.present?
-        vehicle.vehicle_type = vehicle[:vehicle_type]
-        vehicle.save
-        return vehicle
+      if existing_vehicle
+        existing_vehicle.vehicle_type = @vehicle_params[:vehicle_type]
+        existing_vehicle.save
+        return existing_vehicle
       end
 
-      vehicle = VehicleCreator.call @vehicle
-      vehicle
+      create_new_vehicle
     end
 
 
 
     private
 
-    def get_existing
-      Vehicle.plate_number_is(@vehicle[:plate_number]).first
+    def get_existing_vehicle
+      Vehicle.plate_number_is(@vehicle_params[:plate_number]).first
+    end
+
+    def create_new_vehicle
+      VehicleCreator.call @vehicle_params
     end
 
   end

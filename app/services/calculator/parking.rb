@@ -17,7 +17,7 @@ module Calculator
     def call
       total_hours = calculate_total_hours
 
-      if apply_flat_rate?(total_hours)
+      if apply_flat_rate? total_hours
         return parking_lot.flat_rate
       end
 
@@ -40,7 +40,7 @@ module Calculator
     end
 
     def apply_flat_rate? total_hours
-      !parking_transaction.returning && total_hours <= parking_lot.flat_rate_duration
+      total_hours <= parking_lot.flat_rate_duration
     end
 
     def calculate_overnight_duration total_hours
@@ -49,16 +49,10 @@ module Calculator
 
     def calculate_continuous_duration total_hours, overnight_duration
       if overnight_duration == 0
-        continuous =
-          @parking_transaction.returning ?
-            total_hours :
-            (total_hours - @parking_lot.flat_rate_duration)
-
+        total_hours - @parking_lot.flat_rate_duration
       else
-        continuous = total_hours % OVERNIGHT_HOUR
+        total_hours % OVERNIGHT_HOUR
       end
-
-      continuous
     end
 
     def get_total_overnight_amount duration
@@ -73,14 +67,14 @@ module Calculator
     end
 
     def get_flat_rate overnight_duration
-      return 0 if overnight_duration > 0 || @parking_transaction.returning
+      return 0 if overnight_duration > 0
       @parking_lot.flat_rate
     end
 
     def calculate_total_amount overnight_duration, continuous_duration
-      get_total_overnight_amount(overnight_duration) +
+      get_flat_rate(overnight_duration) +
         get_total_continuous_amount(continuous_duration) +
-        get_flat_rate(overnight_duration)
+        get_total_overnight_amount(overnight_duration)
     end
 
   end

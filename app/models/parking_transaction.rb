@@ -7,10 +7,11 @@ class ParkingTransaction
   belongs_to :parking_slot
   belongs_to :vehicle
 
-  field :start_time, type:DateTime
-  field :end_time, type:DateTime
-  field :returning, type: Boolean
+  field :start_time, type: DateTime
+  field :end_time, type: DateTime
+  field :paid_amount, type: BigDecimal
   field :amount, type: BigDecimal
+  field :total_amount, type: BigDecimal
 
 
 
@@ -23,9 +24,14 @@ class ParkingTransaction
       transition :started => :completed
     end
 
+    event :return do
+      transition :completed => :started
+    end
+
     before_transition :on => :complete, :do => :compute_amount
     before_transition :on => :start, :do => :occupy_parking_slot
     before_transition :on => :complete, :do => :release_parking_slot
+    before_transition :on => :return, :do => :reoccupy_parking_slot
   end
 
 
