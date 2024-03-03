@@ -29,7 +29,7 @@ class Vehicle
   end
 
   def latest_completed_parking_transaction
-    self.parking_transactions.completed.order_by(:start_time => :desc).first
+    self.parking_transactions.completed.ordered_by_end_time.last
   end
 
 end

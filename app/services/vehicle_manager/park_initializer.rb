@@ -21,9 +21,27 @@ module VehicleManager
     private
 
     def validate_transaction
-      if @vehicle.parking_transactions.ongoing.present?
-        raise StandardError, 'You are already parked.'
-      end
+      validate_transaction_time
+      raise StandardError, 'You are already parked.' if already_parked?
+      validate_start_time
+    end
+
+    def validate_transaction_time
+      return if DatetimeUtility.valid_datetime? @transaction_time
+      raise StandardError, 'Invalid transaction time'
+    end
+
+    def already_parked?
+      @vehicle.parking_transactions.ongoing.present?
+    end
+
+    def validate_start_time
+      completed_transactions = @vehicle.parking_transactions.completed.ordered_by_end_time
+      return unless completed_transactions.present?
+
+      last_completed_transaction = completed_transactions.last
+      return unless transaction_time < last_completed_transaction.end_time
+      raise StandardError, 'Start time for parking reservation precedes previous parking time.'
     end
 
     def assign_parking_slot

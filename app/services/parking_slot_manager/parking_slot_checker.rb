@@ -40,7 +40,7 @@ module ParkingSlotManager
       filtered_parking_slots = []
 
       entry_point.downto(1) do |point|
-        filtered_parking_slots = parking_slots.select { |slot| slot.location[point - 1].present? }
+        filtered_parking_slots = parking_slots.select { |slot| slot.location[point - 1] }
         break unless filtered_parking_slots.empty?
       end
 
