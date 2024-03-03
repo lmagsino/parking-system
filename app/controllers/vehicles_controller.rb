@@ -1,5 +1,7 @@
 class VehiclesController < ApplicationController
 
+  # rescue_from StandardError, :with => :handle_error
+
   def park
     parking_transaction =
       VehicleManager::ParkInitializer.call(
@@ -11,9 +13,8 @@ class VehiclesController < ApplicationController
     if parking_transaction.present?
       render_json({:location => parking_transaction.parking_slot.location}, :ok)
     else
-      render_json({:message => 'Sorry, No available parking slot for now'}, :bad_request)
+      render_json({:message => 'Sorry, No available parking slot for now.'}, :bad_request)
     end
-
   end
 
   def unpark
@@ -23,7 +24,13 @@ class VehiclesController < ApplicationController
       )
 
     if parking_transaction.present?
-      render_json({:amount => parking_transaction.amount}, :ok)
+      result = {
+        :paid_amount => parking_transaction.paid_amount,
+        :pending_amount => parking_transaction.amount,
+        :total_amount => parking_transaction.total_amount
+      }
+
+      render_json result, :ok
     else
       render_json({:message => 'Error retrieving the total amount. Please try again.'}, :bad_request)
     end

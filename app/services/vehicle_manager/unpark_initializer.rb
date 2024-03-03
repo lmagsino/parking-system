@@ -19,9 +19,7 @@ module VehicleManager
         vehicle,
         @transaction_time
       )
-
-    rescue StandardError => e
-      handle_error "Error in UnparkInitializer: #{e.message}"
     end
+
   end
 end

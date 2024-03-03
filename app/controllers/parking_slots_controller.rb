@@ -1,5 +1,7 @@
 class ParkingSlotsController < ApplicationController
 
+  rescue_from StandardError, :with => :handle_error
+
   before_action :set_parking_slot, only: %i[ show destroy ]
 
 

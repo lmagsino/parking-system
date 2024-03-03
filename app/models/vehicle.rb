@@ -1,4 +1,5 @@
 class Vehicle
+
   include Mongoid::Document
   include Mongoid::Timestamps
 

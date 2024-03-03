@@ -12,8 +12,8 @@ module ParkingSlotManager
     end
 
     def call
-      available_parking_slots = get_available_parking_slots
-      return false if available_parking_slots.empty?
+      available_parking_slots = find_available_parking_slots
+      validate_parking_slots available_parking_slots
 
       sorted_parking_slots = sort_parking_slots available_parking_slots
       sorted_parking_slots.first
@@ -23,7 +23,13 @@ module ParkingSlotManager
 
     private
 
-    def get_available_parking_slots
+    def validate_parking_slots available_parking_slots
+      if available_parking_slots.empty?
+        raise StandardError, 'Sorry, No available parking slot for now.'
+      end
+    end
+
+    def find_available_parking_slots
       parking_slots = []
 
       parking_types.each do |parking_type|
