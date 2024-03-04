@@ -40,6 +40,7 @@ Welcome to the Parking Application created by Leo Magsino. This application prov
 * `Retrieve all parking slots`: Retrieves all parking slots in the database.
 * `Remove parking slot`: Removes a parking slot by ID.
 * `Create parking slots`: Adds parking slots.
+* Map example: [3,2,1], [4,5,3], [4,3,1]
 
 ### PARK
 * `Park`: Automatically assigns a parking slot to a vehicle.
