@@ -24,6 +24,7 @@ module ParkingSlotManager
 
         if is_vehicle_returning
           parking_transaction = @vehicle.latest_completed_parking_transaction
+          parking_transaction.parking_slot = @parking_slot
         else
           parking_transaction =
             ParkingTransactionCreator.call(
